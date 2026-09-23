@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+:root {
+  /* Base */
+  --background: #fffbf6;
+  --foreground: #2b2420;
+  --card: #ffffff;
+  --card-foreground: #2b2420;
+  --border: #ece1d4;
+  --muted: #f6efe6;
+  --muted-foreground: #7a6f63;
+  --ring: #f2635a;
+
+  /* Brand */
+  --color-primary: #f2635a;
+  --color-primary-foreground: #ffffff;
+  --color-primary-hover: #e0483f;
+  --color-secondary: #3fa9e0;
+  --color-secondary-foreground: #ffffff;
+  --color-accent: #ffc94a;
+  --color-accent-foreground: #2b2420;
+  --color-mint: #3dbe9b;
+  --color-mint-foreground: #ffffff;
+  --color-pink: #ff9bbe;
+  --color-pink-foreground: #ffffff;
+  --color-destructive: #e2483d;
+  --color-destructive-foreground: #ffffff;
+
+  --font-heading: var(--font-baloo), sans-serif;
+  --font-body: var(--font-be-vietnam), sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-ring: var(--ring);
+
+  --color-primary: var(--color-primary);
+  --color-primary-foreground: var(--color-primary-foreground);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-foreground: var(--color-secondary-foreground);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: var(--color-accent-foreground);
+  --color-mint: var(--color-mint);
+  --color-mint-foreground: var(--color-mint-foreground);
+  --color-pink: var(--color-pink);
+  --color-pink-foreground: var(--color-pink-foreground);
+  --color-destructive: var(--color-destructive);
+  --color-destructive-foreground: var(--color-destructive-foreground);
+
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
+}
+
+.container-shop {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-shop {
+    padding-inline: 1.5rem;
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+.animate-wiggle:hover {
+  animation: wiggle 0.4s ease-in-out;
+}

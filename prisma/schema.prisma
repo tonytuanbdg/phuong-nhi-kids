@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Gender {
+  BOY
+  GIRL
+  UNISEX
+}
+
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPING
+  COMPLETED
+  CANCELLED
+}
+
+enum AdminRole {
+  OWNER
+  STAFF
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?    @db.Text
+  gender      Gender?
+  placeholderKind String @default("bo-do")
+  placeholderTone String @default("coral")
+  sortOrder   Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  products    Product[]
+
+  @@index([gender])
+}
+
+model Product {
+  id              String          @id @default(cuid())
+  name            String
+  slug            String          @unique
+  description     String          @db.Text
+  categoryId      String
+  category        Category        @relation(fields: [categoryId], references: [id])
+  gender          Gender          @default(UNISEX)
+  ageMinMonths     Int            @default(12)
+  ageMaxMonths     Int            @default(192)
+  basePrice       Int
+  compareAtPrice  Int?
+  status          ProductStatus   @default(PUBLISHED)
+  isFeatured      Boolean         @default(false)
+  isNewArrival    Boolean         @default(false)
+  placeholderKind String          @default("bo-do")
+  placeholderTone String          @default("coral")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  images          ProductImage[]
+  variants        ProductVariant[]
+  orderItems      OrderItem[]
+
+  @@index([categoryId])
+  @@index([status])
+  @@index([gender])
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String   @default("")
+  sortOrder Int      @default(0)
+
+  @@index([productId])
+}
+
+model ProductVariant {
+  id         String      @id @default(cuid())
+  productId  String
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size       String
+  color      String
+  sku        String      @unique
+  stock      Int         @default(0)
+  orderItems OrderItem[]
+
+  @@index([productId])
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  orderCode     String      @unique
+  customerName  String
+  phone         String
+  address       String      @db.Text
+  note          String?     @db.Text
+  status        OrderStatus @default(PENDING)
+  paymentMethod String      @default("COD")
+  subtotal      Int
+  shippingFee   Int         @default(0)
+  total         Int
+  items         OrderItem[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([status])
+  @@index([phone])
+}
+
+model OrderItem {
+  id            String          @id @default(cuid())
+  orderId       String
+  order         Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId     String?
+  product       Product?        @relation(fields: [productId], references: [id], onDelete: SetNull)
+  variantId     String?
+  variant       ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+  productName   String
+  variantLabel  String
+  unitPrice     Int
+  quantity      Int
+  lineTotal     Int
+
+  @@index([orderId])
+}
+
+model AdminUser {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  role         AdminRole @default(STAFF)
+  createdAt    DateTime  @default(now())
+}
