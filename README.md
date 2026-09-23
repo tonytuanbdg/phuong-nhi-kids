@@ -42,10 +42,10 @@ npm install
 cp .env.example .env
 ```
 
-Mở `.env` và điền `DATABASE_URL` trỏ tới MySQL của bạn (lưu ý dùng tiền tố `mariadb://` thay vì `mysql://` — driver này tương thích hoàn toàn với MySQL):
+Mở `.env` và điền `DATABASE_URL` trỏ tới MySQL của bạn:
 
 ```
-DATABASE_URL="mariadb://root:matkhau@localhost:3306/phuong_nhi_kids"
+DATABASE_URL="mysql://root:matkhau@localhost:3306/phuong_nhi_kids"
 ```
 
 Tạo bảng và nạp dữ liệu mẫu:
@@ -102,7 +102,7 @@ Hostinger hỗ trợ chạy ứng dụng Node.js qua **hPanel → Advanced → N
 Trong phần **Environment Variables** của Node.js App trên hPanel, thêm toàn bộ biến trong `.env.example`, ví dụ:
 
 ```
-DATABASE_URL=mariadb://u123456789_dbuser:matkhau@localhost:3306/u123456789_phuongnhikids
+DATABASE_URL=mysql://u123456789_dbuser:matkhau@localhost:3306/u123456789_phuongnhikids
 AUTH_SECRET=<chuoi-ngau-nhien-that-dai>
 NEXTAUTH_URL=https://tenmien-cua-ban.vn
 NEXT_PUBLIC_SITE_URL=https://tenmien-cua-ban.vn
